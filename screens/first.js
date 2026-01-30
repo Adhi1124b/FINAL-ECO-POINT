@@ -15,20 +15,20 @@ export default function First({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
 
-      {/* Scrollable Content */}
+      
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
 
-        {/* Image */}
+        
         <Image
           source={require("../assets/images/eco.jpg")}
           style={styles.image}
           resizeMode="contain"
         />
 
-        {/* Text Content */}
+        
         <View style={styles.textBox}>
           <Text style={styles.welcome}>Welcome!</Text>
 
@@ -41,7 +41,7 @@ export default function First({ navigation }) {
           <Text style={styles.desc}>• Keep your city green</Text>
         </View>
 
-        {/* Bottom Section */}
+      
         <View style={styles.bottomSection}>
 
           <TouchableOpacity
@@ -57,7 +57,7 @@ export default function First({ navigation }) {
             </LinearGradient>
           </TouchableOpacity>
 
-          {/* Page Dots */}
+        
           <View style={styles.dots}>
             <View style={[styles.dot, styles.activeDot]} />
             <View style={styles.dot} />

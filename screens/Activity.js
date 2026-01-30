@@ -15,7 +15,7 @@ import * as SecureStore from "expo-secure-store";
 
 const BASE_URL = "https://expobackend-ykn9.onrender.com";
 
-// ✅ Token fetch for Web & Mobile
+
 const getToken = async () => {
   if (Platform.OS === "web") {
     return localStorage.getItem("token");
@@ -34,7 +34,7 @@ export default function AddActivity({ route, navigation }) {
 
   const { category: navCategory, title: navTitle } = route?.params || {};
 
-  // ✅ Universal Alert (Web + Mobile)
+  
   const showAlert = (title, message, callback) => {
     if (Platform.OS === "web") {
       window.alert(`${title}\n\n${message}`);
@@ -44,7 +44,7 @@ export default function AddActivity({ route, navigation }) {
     }
   };
 
-  // ✅ Auto-fill from Activity screen
+ 
   useEffect(() => {
     if (navCategory) setCategory(navCategory);
     if (navTitle) setTitle(navTitle);
@@ -67,7 +67,7 @@ export default function AddActivity({ route, navigation }) {
     }
   };
 
-  // ✅ Validation + API Submit + Dashboard Redirect
+  
   const handleSubmit = async () => {
     if (!title.trim()) {
       showAlert("Validation Error", "Activity title is required");
@@ -130,7 +130,7 @@ export default function AddActivity({ route, navigation }) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Back Button */}
+      
       <TouchableOpacity
         style={styles.backBtn}
         onPress={() => navigation.goBack()}

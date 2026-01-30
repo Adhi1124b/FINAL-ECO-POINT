@@ -11,7 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 
-//const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+
 const BASE_URL = "https://expobackend-ykn9.onrender.com";
 
 
@@ -54,7 +54,7 @@ const [showPassword, setShowPassword] = useState(false);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Header Gradient */}
+      
       <LinearGradient
         colors={["#1E8E3E", "#2ECC71", "#27AE60"]}
         style={styles.header}
@@ -72,7 +72,7 @@ const [showPassword, setShowPassword] = useState(false);
         </Text>
       </LinearGradient>
 
-      {/* Register Card */}
+      
       <View style={styles.card}>
         <Text style={styles.label}>Full Name</Text>
         <TextInput
@@ -92,13 +92,7 @@ const [showPassword, setShowPassword] = useState(false);
           onChangeText={setEmail}
         />
 
-        {/* <TextInput
-          placeholder="Enter your password"
-          secureTextEntry
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-        /> */}
+        
         <Text style={styles.label}>Password</Text>
 
 <View style={styles.passwordWrapper}>
@@ -233,7 +227,7 @@ const styles = StyleSheet.create({
   marginBottom: 16,
   borderWidth: 1,
   borderColor: "#E0EEE7",
-  color: "#000",              // ✅ TEXT BLACK (APK FIX)
+  color: "#000",         
 },
 passwordWrapper: {
   flexDirection: "row",
@@ -249,7 +243,7 @@ passwordInput: {
   flex: 1,
   padding: 14,
   fontSize: 15,
-  color: "#000",              // ✅ PASSWORD TEXT BLACK
+  color: "#000",              
 },
 
 eyeBtn: {

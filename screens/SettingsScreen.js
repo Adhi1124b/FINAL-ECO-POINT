@@ -1,167 +1,3 @@
-// import React from "react";
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   ScrollView,
-//   TouchableOpacity,
-// } from "react-native";
-// import { Ionicons } from "@expo/vector-icons";
-
-// export default function SettingsScreen({ navigation }) {
-
-//   const history = [
-//     {
-//       id: 1,
-//       title: "Water Saved",
-//       desc: "Saved 10L water",
-//       date: "Today · 10:00 AM",
-//       points: "+20 pts",
-//     },
-//     {
-//       id: 2,
-//       title: "Plastic Recycled",
-//       desc: "Recycled plastic bottle",
-//       date: "Yesterday · 5:30 PM",
-//       points: "+30 pts",
-//     },
-//     {
-//       id: 3,
-//       title: "Public Transport",
-//       desc: "Used bus instead of bike",
-//       date: "2 days ago · 9:15 AM",
-//       points: "+15 pts",
-//     },
-//   ];
-
-//   const handleLogout = () => {
-//     navigation.replace("Login"); 
-//   };
-
-//   return (
-//     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-
-//       <Text style={styles.title}>Settings ⚙️</Text>
-
-//       <SettingItem icon="person" text="Profile" />
-//       <SettingItem icon="notifications" text="Notifications" />
-//       <SettingItem icon="shield-checkmark" text="Privacy & Security" />
-//       <SettingItem icon="help-circle" text="Help & Support" />
-
-//       <Text style={styles.section}>Record History</Text>
-
-//       {history.map((item) => (
-//         <View key={item.id} style={styles.historyCard}>
-//           <View style={{ flex: 1 }}>
-//             <Text style={styles.historyTitle}>{item.title}</Text>
-//             <Text style={styles.historyDesc}>{item.desc}</Text>
-//             <Text style={styles.historyDate}>{item.date}</Text>
-//           </View>
-//           <Text style={styles.historyPoints}>{item.points}</Text>
-//         </View>
-//       ))}
-
-//       {/* LOGOUT */}
-//       <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
-//         <Ionicons name="log-out" size={20} color="#fff" />
-//         <Text style={styles.logoutText}>Logout</Text>
-//       </TouchableOpacity>
-
-//     </ScrollView>
-//   );
-// }
-
-// const SettingItem = ({ icon, text }) => (
-//   <View style={styles.settingItem}>
-//     <Ionicons name={icon} size={22} color="#1E8E3E" />
-//     <Text style={styles.settingText}>{text}</Text>
-//   </View>
-// );
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#F4F9F6",
-//     padding: 20,
-//   },
-
-//   title: {
-//     fontSize: 22,
-//     fontWeight: "700",
-//     color: "#1E8E3E",
-//     marginBottom: 20,
-//   },
-
-//   settingItem: {
-//     backgroundColor: "#ffffff",
-//     borderRadius: 14,
-//     padding: 16,
-//     flexDirection: "row",
-//     alignItems: "center",
-//     marginBottom: 12,
-//     elevation: 2,
-//   },
-//   settingText: {
-//     marginLeft: 15,
-//     fontSize: 15,
-//     fontWeight: "600",
-//     color: "#2C3E50",
-//   },
-
-//   section: {
-//     fontSize: 18,
-//     fontWeight: "700",
-//     color: "#2C3E50",
-//     marginTop: 20,
-//     marginBottom: 10,
-//   },
-
-//   historyCard: {
-//     backgroundColor: "#ffffff",
-//     borderRadius: 14,
-//     padding: 14,
-//     marginBottom: 10,
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     elevation: 2,
-//   },
-//   historyTitle: {
-//     fontSize: 14,
-//     fontWeight: "700",
-//     color: "#2E5D4B",
-//   },
-//   historyDesc: {
-//     fontSize: 12,
-//     color: "#6E8F7C",
-//     marginTop: 2,
-//   },
-//   historyDate: {
-//     fontSize: 11,
-//     color: "#95A5A6",
-//     marginTop: 2,
-//   },
-//   historyPoints: {
-//     fontSize: 13,
-//     fontWeight: "700",
-//     color: "#1E8E3E",
-//   },
-
-//   logoutBtn: {
-//     marginTop: 30,
-//     backgroundColor: "#E74C3C",
-//     padding: 14,
-//     borderRadius: 14,
-//     flexDirection: "row",
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   logoutText: {
-//     color: "#ffffff",
-//     fontWeight: "700",
-//     marginLeft: 10,
-//   },
-// });
-
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -174,23 +10,19 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
+import { LinearGradient } from "expo-linear-gradient";
 
 const BASE_URL = "https://expobackend-ykn9.onrender.com";
 
-// 🔐 TOKEN HELPERS
+
 const getToken = async () => {
-  if (Platform.OS === "web") {
-    return localStorage.getItem("token");
-  }
+  if (Platform.OS === "web") return localStorage.getItem("token");
   return await SecureStore.getItemAsync("token");
 };
 
 const removeToken = async () => {
-  if (Platform.OS === "web") {
-    localStorage.removeItem("token");
-  } else {
-    await SecureStore.deleteItemAsync("token");
-  }
+  if (Platform.OS === "web") localStorage.removeItem("token");
+  else await SecureStore.deleteItemAsync("token");
 };
 
 export default function SettingsScreen({ navigation }) {
@@ -199,17 +31,14 @@ export default function SettingsScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadSettings();
+    loadProfile();
   }, []);
 
-  const loadSettings = async () => {
+  const loadProfile = async () => {
     try {
       const token = await getToken();
-
       const res = await fetch(`${BASE_URL}/settings`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (res.status === 401 || res.status === 403) {
@@ -221,7 +50,7 @@ export default function SettingsScreen({ navigation }) {
       setProfile(data.user);
       setActivities(data.activities || []);
     } catch (err) {
-      console.log("Settings Error:", err);
+      console.log("Profile error:", err);
     } finally {
       setLoading(false);
     }
@@ -238,62 +67,96 @@ export default function SettingsScreen({ navigation }) {
   if (loading) {
     return (
       <View style={styles.loader}>
-        <ActivityIndicator size="large" color="#1E8E3E" />
+        <ActivityIndicator size="large" color="#2E7D32" />
       </View>
     );
   }
 
+  const totalActivities = activities.length;
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* PROFILE */}
-      <View style={styles.profileCard}>
-        <Ionicons name="person-circle" size={80} color="#1E8E3E" />
-        <Text style={styles.profileName}>{profile?.name || "User"}</Text>
-        <Text style={styles.profileEmail}>{profile?.email}</Text>
-      </View>
+      
+      <LinearGradient colors={["#2E7D32", "#4CAF50"]} style={styles.header}>
+        <View style={styles.avatarWrap}>
+          <Ionicons name="person" size={44} color="#2E7D32" />
+        </View>
 
-      {/* HISTORY */}
-      <Text style={styles.section}>Activity History</Text>
+        <Text style={styles.name}>{profile?.name}</Text>
+        <Text style={styles.email}>{profile?.email}</Text>
+
+        
+        <View style={styles.statsRow}>
+          <View style={styles.statCard}>
+            <Ionicons name="checkmark-done" size={22} color="#2E7D32" />
+            <Text style={styles.statValue}>{totalActivities}</Text>
+            <Text style={styles.statLabel}>Activities</Text>
+          </View>
+        </View>
+      </LinearGradient>
+
+      
+      <Text style={styles.sectionTitle}>🌱 Activity History</Text>
 
       {activities.length === 0 ? (
-        <Text style={styles.emptyText}>No activities recorded yet</Text>
+        <Text style={styles.empty}>No activities recorded yet</Text>
       ) : (
         activities.map((item, index) => (
-          <View key={index} style={styles.historyCard}>
-            <Text style={styles.historyTitle}>{item.title}</Text>
-            <Text style={styles.historySub}>
-              {item.category} • {item.value}
-            </Text>
+          <View key={index} style={styles.activityCard}>
+            <View style={styles.iconCircle}>
+              <Ionicons
+                name={
+                  item.category === "Water Conservation"
+                    ? "water"
+                    : item.category === "Tree Plantation"
+                    ? "leaf"
+                    : "recycle"
+                }
+                size={22}
+                color="#fff"
+              />
+            </View>
 
-            {item.impact?.co2SavedKg && (
-              <Text style={styles.impact}>
-                🌱 CO₂ Saved: {item.impact.co2SavedKg} kg
+            <View style={{ flex: 1 }}>
+              <Text style={styles.activityTitle}>{item.title}</Text>
+              <Text style={styles.activitySub}>
+                {item.category} • {item.value}
               </Text>
-            )}
 
-            {item.impact?.waterSavedL && (
-              <Text style={styles.impact}>
-                💧 Water Saved: {item.impact.waterSavedL} L
-              </Text>
-            )}
+              {item.impact?.co2SavedKg && (
+                <Text style={styles.impact}>
+                  🌿 CO₂ Saved: {item.impact.co2SavedKg} kg
+                </Text>
+              )}
+
+              {item.impact?.waterSavedL && (
+                <Text style={styles.impact}>
+                  💧 Water Saved: {item.impact.waterSavedL} L
+                </Text>
+              )}
+            </View>
+
+            <Ionicons name="checkmark-circle" size={22} color="#2E7D32" />
           </View>
         ))
       )}
 
-      {/* LOGOUT */}
+      
       <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
-        <Ionicons name="log-out-outline" size={20} color="#fff" />
+        <Ionicons name="log-out-outline" size={22} color="#fff" />
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
+
+      <View style={{ height: 30 }} />
     </ScrollView>
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F4F9F6",
-    padding: 20,
+    backgroundColor: "#F3F8F5",
   },
 
   loader: {
@@ -302,74 +165,121 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  profileCard: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 24,
+  header: {
+    paddingTop: 60,
+    paddingBottom: 34,
     alignItems: "center",
-    marginBottom: 24,
+    borderBottomLeftRadius: 28,
+    borderBottomRightRadius: 28,
+  },
+
+  avatarWrap: {
+    width: 86,
+    height: 86,
+    borderRadius: 43,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    elevation: 4,
+  },
+
+  name: {
+    fontSize: 20,
+    fontWeight: "900",
+    color: "#fff",
+  },
+
+  email: {
+    fontSize: 13,
+    color: "#E8F5E9",
+    marginTop: 4,
+  },
+
+  statsRow: {
+    marginTop: 18,
+  },
+
+  statCard: {
+    backgroundColor: "#fff",
+    borderRadius: 18,
+    paddingVertical: 14,
+    paddingHorizontal: 40,
+    alignItems: "center",
     elevation: 3,
   },
 
-  profileName: {
+  statValue: {
     fontSize: 18,
-    fontWeight: "800",
-    color: "#2C3E50",
-    marginTop: 8,
-  },
-
-  profileEmail: {
-    fontSize: 14,
-    color: "#7F8C8D",
+    fontWeight: "900",
+    color: "#2E7D32",
     marginTop: 4,
   },
 
-  section: {
-    fontSize: 18,
-    fontWeight: "800",
-    color: "#2C3E50",
-    marginBottom: 12,
+  statLabel: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#555",
   },
 
-  historyCard: {
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "900",
+    color: "#2C3E50",
+    margin: 16,
+  },
+
+  empty: {
+    textAlign: "center",
+    color: "#888",
+    marginVertical: 20,
+  },
+
+  activityCard: {
     backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 16,
+    marginHorizontal: 16,
     marginBottom: 12,
+    borderRadius: 18,
+    padding: 14,
+    flexDirection: "row",
+    alignItems: "center",
     elevation: 2,
   },
 
-  historyTitle: {
+  iconCircle: {
+    width: 46,
+    height: 46,
+    borderRadius: 14,
+    backgroundColor: "#2E7D32",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 12,
+  },
+
+  activityTitle: {
     fontSize: 15,
-    fontWeight: "700",
+    fontWeight: "800",
     color: "#2C3E50",
   },
 
-  historySub: {
-    fontSize: 13,
-    color: "#7F8C8D",
-    marginTop: 4,
+  activitySub: {
+    fontSize: 12,
+    color: "#777",
+    marginTop: 2,
   },
 
   impact: {
-    marginTop: 6,
-    fontSize: 13,
+    marginTop: 4,
+    fontSize: 12,
     fontWeight: "700",
-    color: "#1E8E3E",
-  },
-
-  emptyText: {
-    textAlign: "center",
-    color: "#95A5A6",
-    marginVertical: 20,
-    fontSize: 14,
+    color: "#2E7D32",
   },
 
   logoutBtn: {
-    marginTop: 30,
     backgroundColor: "#E74C3C",
+    margin: 20,
     padding: 16,
-    borderRadius: 16,
+    borderRadius: 18,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -377,8 +287,8 @@ const styles = StyleSheet.create({
 
   logoutText: {
     color: "#fff",
-    fontWeight: "800",
+    fontWeight: "900",
+    fontSize: 16,
     marginLeft: 10,
-    fontSize: 15,
   },
 });

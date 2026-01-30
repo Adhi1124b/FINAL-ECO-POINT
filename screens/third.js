@@ -15,7 +15,7 @@ export default function ThirdScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
 
-      {/* Back Button */}
+      
       <TouchableOpacity
         style={styles.backBtn}
         onPress={() => navigation.goBack()}
@@ -23,20 +23,20 @@ export default function ThirdScreen({ navigation }) {
         <Ionicons name="arrow-back" size={24} color="#1E8E3E" />
       </TouchableOpacity>
 
-      {/* Scrollable Content */}
+    
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
 
-        {/* Image */}
+        
         <Image
           source={require("../assets/images/eco4.jpg.jpeg")}
           style={styles.image}
           resizeMode="contain"
         />
 
-        {/* Text Content */}
+        
         <View style={styles.textBox}>
           <Text style={styles.heading}>
             Turn Every Ride into{"\n"}a Challenge
@@ -51,7 +51,7 @@ export default function ThirdScreen({ navigation }) {
           </Text>
         </View>
 
-        {/* Bottom Section */}
+        
         <View style={styles.bottomSection}>
 
           <TouchableOpacity
@@ -67,7 +67,7 @@ export default function ThirdScreen({ navigation }) {
             </LinearGradient>
           </TouchableOpacity>
 
-          {/* Page Dots */}
+          
           <View style={styles.dots}>
             <View style={styles.dot} />
             <View style={styles.dot} />

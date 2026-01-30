@@ -11,7 +11,7 @@ import * as SecureStore from "expo-secure-store";
 
 const BASE_URL = "https://expobackend-ykn9.onrender.com";
 
-/* TOKEN */
+
 const getToken = async () => {
   if (Platform.OS === "web") return localStorage.getItem("token");
   return await SecureStore.getItemAsync("token");
@@ -52,14 +52,14 @@ export default function DashboardScreen() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* HERO */}
+      
       <LinearGradient colors={["#1E8E3E", "#2ECC71"]} style={styles.hero}>
         <Text style={styles.welcome}>Welcome back 🌿</Text>
         <Text style={styles.points}>{points}</Text>
         <Text style={styles.level}>Eco Points</Text>
       </LinearGradient>
 
-      {/* BADGES */}
+      
       <Section title="🏅 Your Badges">
         {badges.length === 0 ? (
           <Text style={styles.emptyText}>No badges unlocked yet</Text>
@@ -74,27 +74,27 @@ export default function DashboardScreen() {
         )}
       </Section>
 
-      {/* IMPACT */}
+      
       <Section title="📊 Impact Summary">
         <StatRow label="Total Activities" value={stats.totalActivities} />
         <StatRow label="CO₂ Saved" value={`${stats.totalCO2 || 0} kg`} />
         <StatRow label="Water Saved" value={`${stats.totalWater || 0} L`} />
       </Section>
 
-      {/* LEADERBOARD */}
+     
       <Section title="🏆 Leaderboard">
         {leaders.length === 0 ? (
           <Text style={styles.emptyText}>No rankings available</Text>
         ) : (
           <View style={styles.table}>
-            {/* HEADER */}
+            
             <View style={[styles.tableRow, styles.tableHeader]}>
               <Text style={[styles.cellRank, styles.headerText]}>RANK</Text>
               <Text style={[styles.cellName, styles.headerText]}>USER</Text>
               <Text style={[styles.cellPoints, styles.headerText]}>POINTS</Text>
             </View>
 
-            {/* ROWS */}
+           
             {leaders.map((item, index) => (
               <View
                 key={item.rank}
@@ -123,7 +123,7 @@ export default function DashboardScreen() {
   );
 }
 
-/* SMALL COMPONENTS */
+
 const Section = ({ title, children }) => (
   <View style={styles.card}>
     <Text style={styles.cardTitle}>{title}</Text>
@@ -138,14 +138,14 @@ const StatRow = ({ label, value }) => (
   </View>
 );
 
-/* STYLES */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F4F6F8",
   },
 
-  /* HERO */
+  
   hero: {
     paddingVertical: 40,
     alignItems: "center",
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  /* SECTION */
+  
   card: {
     backgroundColor: "#fff",
     marginHorizontal: 16,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     color: "#222",
   },
 
-  /* BADGES */
+  
   badgeWrap: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     color: "#1E8E3E",
   },
 
-  /* STATS */
+  
   statRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     color: "#1E8E3E",
   },
 
-  /* TABLE */
+
   table: {
     borderRadius: 12,
     overflow: "hidden",
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     color: "#1E8E3E",
   },
 
-  /* TOP 3 HIGHLIGHT */
+  
   goldRow: {
     backgroundColor: "#FFF9E6",
   },

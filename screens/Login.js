@@ -62,7 +62,7 @@ const [showPassword, setShowPassword] = useState(false);
       const data = await res.json();
 
       if (res.ok) {
-        // ✅ FIX: Platform-based token storage
+        
         if (Platform.OS === "web") {
           localStorage.setItem("token", data.token);
         } else {
@@ -110,15 +110,7 @@ const [showPassword, setShowPassword] = useState(false);
           value={email}
           onChangeText={setEmail}
         />
-{/* 
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          placeholder="Enter your password"
-          secureTextEntry
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-        /> */}
+
         <Text style={styles.label}>Password</Text>
 
 <View style={styles.passwordWrapper}>
@@ -154,9 +146,7 @@ const [showPassword, setShowPassword] = useState(false);
           </Text>
         </TouchableOpacity>
 
-        {/* <TouchableOpacity>
-          <Text style={styles.forgot}>Forgot Password?</Text>
-        </TouchableOpacity> */}
+        
 
         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <Text style={styles.registerLink}>Create new account</Text>
@@ -251,7 +241,7 @@ passwordInput: {
   flex: 1,
   padding: 14,
   fontSize: 15,
-  color: "#000", // ✅ PASSWORD TEXT BLACK
+  color: "#000", 
 },
 
 eyeBtn: {
